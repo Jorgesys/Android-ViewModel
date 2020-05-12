@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">ViewModelNLiveData</string>
+
+    <string-array name="users_array">
+        <item>Iris</item>
+        <item>Doris</item>
+        <item>Ioana</item>
+        <item>Minodora</item>
+        <item>Angela</item>
+        <item>Cris</item>
+        <item>Haris</item>
+        <item>Radu</item>
+        <item>Constantin</item>
+        <item>Jorgesys</item>
+    </string-array>
+
+    <string-array name="lastname_array">
+        <item>Vai</item>
+        <item>Satriani</item>
+        <item>Vandenberg</item>
+        <item>Page</item>
+        <item>Gallagher</item>
+        <item>Hendrix</item>
+        <item>Iomi</item>
+        <item>Radu</item>
+        <item>Sys</item>
+        <item>Clapton</item>
+    </string-array>
+
+
+</resources>
