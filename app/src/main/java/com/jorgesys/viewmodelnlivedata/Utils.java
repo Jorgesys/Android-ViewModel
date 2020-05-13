@@ -3,6 +3,10 @@ package com.jorgesys.viewmodelnlivedata;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class Utils {
 
     public static User getRandomUser(Context ctx){
@@ -19,5 +23,9 @@ public class Utils {
 
     }
 
+
+    public static String millisecToTime(Long millis) {
+        return (new SimpleDateFormat("hh:mm:ss a")).format(new Date(millis));
+    }
 
 }

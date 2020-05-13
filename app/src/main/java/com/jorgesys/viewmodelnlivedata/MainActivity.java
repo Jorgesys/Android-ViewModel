@@ -2,6 +2,7 @@ package com.jorgesys.viewmodelnlivedata;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,15 +18,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String TAG = "MyViewModel";
+    private MyViewModel model;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);
-        MyViewModel model = ViewModelProviders.of(this).get(MyViewModel.class);
+        model = ViewModelProviders.of(this).get(MyViewModel.class);
         //MainActivityViewModel model = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         //Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
@@ -49,4 +52,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Log.i(TAG, "hasObservers(): " + model.getUsersList(getApplicationContext()).hasObservers());
+        Log.i(TAG, "hasActiveObservers(): " + model.getUsersList(getApplicationContext()).hasActiveObservers());
+        model.getUsersList(getApplicationContext()).removeObservers(this);
+    }
+
+
 }
