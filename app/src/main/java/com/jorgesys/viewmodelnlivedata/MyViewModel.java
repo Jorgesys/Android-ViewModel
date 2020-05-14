@@ -3,6 +3,7 @@ package com.jorgesys.viewmodelnlivedata;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,16 +20,18 @@ import java.util.TimerTask;
 public class MyViewModel extends ViewModel {
 
     private String TAG = MyViewModel.class.getSimpleName();
-
     private MutableLiveData<List<User>> usersList;
+    private Handler myHandler;
 
 
     LiveData<List<User>> getUsersList(Context context) {
         Log.i(TAG, "getUsersList() called!.");
         if (usersList == null) {
-            Log.i(TAG, "getUsersList() usersList == null then call loadUsers().");
+            Log.w(TAG, "getUsersList() usersList == null then call loadUsers().");
             usersList = new MutableLiveData<>();
             loadUsers(context);
+        }else{
+            Log.i(TAG, "getUsersList() usersList has values!, don´t call loadUsers().");
         }
         return usersList;
     }
@@ -36,7 +39,10 @@ public class MyViewModel extends ViewModel {
     private void loadUsers(final Context context) {
         Log.i(TAG, "loadUsers() called!.");
 
-        final Handler myHandler = new Handler();
+        if(myHandler==null){
+            myHandler = new Handler();
+        }
+
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -49,6 +55,7 @@ public class MyViewModel extends ViewModel {
                 long seed = System.nanoTime();
                 Collections.shuffle(usersStringList, new Random(seed));
 
+                //setValue() : set the value and dispatch the value to all the active observers.
                 usersList.setValue(usersStringList);
 
                 myHandler.postDelayed(this, 10000);
@@ -62,6 +69,8 @@ public class MyViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         Log.w(TAG, "onCleared() called!.. bye");
+        myHandler.removeCallbacksAndMessages(null);
     }
+
 
 }
